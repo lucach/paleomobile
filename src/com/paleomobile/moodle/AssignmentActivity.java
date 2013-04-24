@@ -187,28 +187,40 @@ public class AssignmentActivity extends Activity
 			            pulsante.setEnabled(false);
 		        	  }
 		        	});
-	        	}
-	        	Button apri = (Button) findViewById(R.assignment.button2);
-	        	apri.setVisibility(View.VISIBLE);
-	            apri.setOnClickListener(new View.OnClickListener() {
-					public void onClick(View view) { 
-							Intent intent = new Intent();
-				            intent.setAction(android.content.Intent.ACTION_VIEW);
-			                try {
-			                	intent.setData(Uri.fromFile(outputFile));			      
-			                	startActivity(intent);
-			                }
-			                catch (NullPointerException e) {
-			                	showDialog("È necessario scaricare prima il file!");
-			                }
-			                catch (Exception exc) {
-			        			showDialog("Nessun applicazione installata può aprire questo file.");		        	 
-			                }
-
-		        	  }
-	            });
+	        		}
+		        	Button apri = (Button) findViewById(R.assignment.button2);
+		        	apri.setVisibility(View.VISIBLE);
+		            apri.setOnClickListener(new View.OnClickListener() {
+						public void onClick(View view) { 
+								Intent intent = new Intent();
+					            intent.setAction(android.content.Intent.ACTION_VIEW);
+				                try {
+				                	intent.setData(Uri.fromFile(outputFile));			      
+				                	startActivity(intent);
+				                }
+				                catch (NullPointerException e) {
+				                	showDialog("È necessario scaricare prima il file!");
+				                }
+				                catch (Exception exc) {
+				        			showDialog("Nessun applicazione installata può aprire questo file.");		        	 
+				                }
+	
+			        	  }
+		            });
 
 	        }
+	        else {
+	        	//Open as URL
+	        	Button startBrowser = (Button) findViewById(R.assignment.button1);
+	        	startBrowser.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						 Uri uri = Uri.parse(decisore);
+	        			 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+	        			 startActivity(intent);	
+					}
+	        	});
+	        } 
 		}
 		else {
 			//It may be one of those strange URLs, in fact they're only an autoredirect
