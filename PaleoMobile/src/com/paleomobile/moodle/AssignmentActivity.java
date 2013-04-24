@@ -74,7 +74,7 @@ public class AssignmentActivity extends Activity
 	            output.close();
 	            input.close();
 	        } catch (Exception e) {
-	        	Log.e("Log_tag","Error while downloading the file!");
+	        	Log.e("Log_tag","Error downloading the file!");
 	        }
             outputFile = new File (PATHD+filename);
 	    	mProgressDialog.dismiss();
