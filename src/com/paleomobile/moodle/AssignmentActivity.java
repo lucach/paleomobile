@@ -44,6 +44,10 @@ public class AssignmentActivity extends Activity
 	private String PATHD;
 	ProgressDialog mProgressDialog;
 	
+
+	private void showDialog(String stuff)
+	{ Toast.makeText(this, stuff,Toast.LENGTH_LONG).show(); }
+	
 	private class DownloadFile extends AsyncTask<String, Integer, String> {
 	    @Override
 	    protected String doInBackground(String... sUrl) {
@@ -74,7 +78,7 @@ public class AssignmentActivity extends Activity
 	            output.close();
 	            input.close();
 	        } catch (Exception e) {
-	        	Log.e("Log_tag","Error downloading the file!");
+	        	Log.e("Log_tag",e.getMessage());
 	        }
             outputFile = new File (PATHD+filename);
 	    	mProgressDialog.dismiss();
@@ -93,8 +97,6 @@ public class AssignmentActivity extends Activity
 }
 
 	
-	private void showDialog(String stuff)
-	{ Toast.makeText(this, stuff,Toast.LENGTH_LONG).show(); }
 	
 	private String pulisciStringa(String stringa) {
 		try {
