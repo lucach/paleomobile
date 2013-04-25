@@ -162,7 +162,10 @@ public class AssignmentActivity extends Activity
 	        description.setText(app.assignment.getDescription());
 	        if (decisore.contains("resource")) {
 	            PATHD= Environment.getExternalStorageDirectory().toString()+"/PaleoMobile/downloads";
+	            File PathDir = new File (PATHD);
+	            PathDir.mkdir();
 	        	filename=decisore.substring(decisore.lastIndexOf("/"));
+	 
 	        	final Button pulsante = (Button) findViewById(R.assignment.button1);
 	        	//Check if the file has already been downloaded
 	        	File file = new File (PATHD+filename);
