@@ -208,10 +208,10 @@ public class AssignmentActivity extends Activity
 		            apri.setOnClickListener(new View.OnClickListener() {
 						public void onClick(View view) { 
 								Intent intent = new Intent();
-								intent.setType("application/pdf");
+								File filetoopen = new File(PATHD+filename);
 					            intent.setAction(android.content.Intent.ACTION_VIEW);
 				                try {
-				                	intent.setData(Uri.fromFile(outputFile));			      
+				                	intent.setDataAndType(Uri.fromFile(filetoopen), "application/pdf");
 				                	startActivity(intent);
 				                }
 				                catch (NullPointerException e) {
