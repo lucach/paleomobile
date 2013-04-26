@@ -54,13 +54,23 @@ public class AssignmentActivity extends Activity
 	        try {
 	            URL url = new URL(sUrl[0]);
 	            URLConnection connection = url.openConnection();
-	            String PATHCOOKIE = Environment.getExternalStorageDirectory().toString()+"/PaleoMobile/cookie";
+	            //Read session-cookie
+	            String PATHCOOKIE = Environment.getExternalStorageDirectory().toString()+"/PaleoMobile/cookie";           
 	            File cookie = new File(PATHCOOKIE);
-                FileInputStream cookiestream = new FileInputStream(cookie);
-                String ret = convertStreamToString(cookiestream);
-                cookiestream.close();        
-                ret = ret.substring(8);
-                connection.setRequestProperty("Cookie", ret);
+	            FileInputStream cookiestream = new FileInputStream(cookie);
+	            BufferedReader cookiereader = new BufferedReader(new InputStreamReader(cookiestream));
+	            StringBuffer cookieContent = new StringBuffer("");
+	            byte[] buffer = new byte[1024];
+				int length;
+	            while ((length = cookiestream.read(buffer)) != -1) {
+	            	cookieContent.append(new String(buffer));
+	            }
+	            String cookie_final = cookieContent.toString();
+	            cookie_final = cookie_final.substring(8);
+	            cookiereader.close();
+	
+	            //Do connection
+                connection.setRequestProperty("Cookie", cookie_final);
                 connection.setDoOutput(true);
 	            connection.connect();
 	            int fileLength = connection.getContentLength();
@@ -78,6 +88,7 @@ public class AssignmentActivity extends Activity
 	            output.close();
 	            input.close();
 	        } catch (Exception e) {
+	        	showDialog("Errore durante il download del file!");
 	        	Log.e("log_tag",e.toString());
 	        }
             outputFile = new File (PATHD+filename);
@@ -96,7 +107,6 @@ public class AssignmentActivity extends Activity
 	    	    
 }
 
-	
 	
 	private String pulisciStringa(String stringa) {
 		try {
