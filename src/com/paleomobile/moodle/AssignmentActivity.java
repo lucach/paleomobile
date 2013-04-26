@@ -208,6 +208,7 @@ public class AssignmentActivity extends Activity
 		            apri.setOnClickListener(new View.OnClickListener() {
 						public void onClick(View view) { 
 								Intent intent = new Intent();
+								intent.setType("application/pdf");
 					            intent.setAction(android.content.Intent.ACTION_VIEW);
 				                try {
 				                	intent.setData(Uri.fromFile(outputFile));			      
