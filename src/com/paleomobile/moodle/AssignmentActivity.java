@@ -1,5 +1,7 @@
 package com.paleomobile.moodle;
 
+import android.webkit.MimeTypeMap;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,6 +19,7 @@ import com.paleomobile.moodle.R;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -211,7 +214,12 @@ public class AssignmentActivity extends Activity
 								File filetoopen = new File(PATHD+filename);
 					            intent.setAction(android.content.Intent.ACTION_VIEW);
 				                try {
-				                	intent.setDataAndType(Uri.fromFile(filetoopen), "application/pdf");
+				                	//Get MIME TYPE
+				                	Uri uri = Uri.fromFile(filetoopen);
+				                	String fileExtension= MimeTypeMap.getFileExtensionFromUrl(uri.toString());
+				                	String mimeType= MimeTypeMap.getSingleton().getMimeTypeFromExtension(fileExtension);
+				                	//Start an intent to open the file with obtained MIMETYPE
+				                	intent.setDataAndType(Uri.fromFile(filetoopen), mimeType);
 				                	startActivity(intent);
 				                }
 				                catch (NullPointerException e) {
