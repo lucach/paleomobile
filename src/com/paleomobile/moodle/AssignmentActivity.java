@@ -78,7 +78,7 @@ public class AssignmentActivity extends Activity
 	            output.close();
 	            input.close();
 	        } catch (Exception e) {
-	        	Log.e("Log_tag",e.getMessage());
+	        	Log.e("log_tag",e.toString());
 	        }
             outputFile = new File (PATHD+filename);
 	    	mProgressDialog.dismiss();
