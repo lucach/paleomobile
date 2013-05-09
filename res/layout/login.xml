@@ -26,7 +26,7 @@
     	android:selectAllOnFocus="true" 
    	android:inputType="text" 
     	android:layout_height="wrap_content"  
-    	android:text="student"   
+    	android:text="username"   
    	android:gravity="center" 
     	android:layout_marginTop="10dp" 
    	android:layout_width="203dp"/>
@@ -36,7 +36,7 @@
 	android:selectAllOnFocus="true"
 	android:inputType="textPassword"
 	android:layout_height="wrap_content"
-	android:text="moodle"
+	android:text="password"
 	android:gravity="center" 
 	android:layout_marginTop="10dp"
 	android:layout_width="205dp"/>

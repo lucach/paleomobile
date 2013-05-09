@@ -147,27 +147,28 @@ public class LoginActivity extends Activity
 						loginResult = "Server non disponibile, riprovare più tardi.";		
 					else
 					{
-						String PATH = Environment.getExternalStorageDirectory().toString()+"/PaleoMobile";
-						//Create a file which contains currentsession cookie
-		                File file = new File(PATH);
-		                file.mkdirs();
-		                File outputFile = new File(file, "cookie");
-		                FileOutputStream fos;
-						try {
-							fos = new FileOutputStream(outputFile);
-							fos.write(response.getFirstHeader("Cookie").toString().getBytes());
-							fos.close();
-						} catch (FileNotFoundException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
 						app.httphelper.setHeader(response.getFirstHeader("Cookie")); 	
 						try
 						{
 							json=new JSONObject(EntityUtils.toString(response.getEntity()));
+			                try {
+			                	//If login was successful, cookie can be saved; otherwise display an alert
+			                	String PATH = Environment.getExternalStorageDirectory().toString()+"/PaleoMobile";
+								//Create a file which contains current-session cookie
+				                File file = new File(PATH);
+				                file.mkdirs();
+			                	File outputFile = new File(file, "cookie");
+			                	FileOutputStream fos;
+								fos = new FileOutputStream(outputFile);
+								fos.write(response.getFirstHeader("Cookie").toString().getBytes());
+								fos.close();
+							} catch (FileNotFoundException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						} catch (Exception e){
 							if (saveCredentials)
 								loginResult = "Username o password errati.";
