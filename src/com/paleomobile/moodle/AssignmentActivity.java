@@ -135,6 +135,11 @@ public class AssignmentActivity extends Activity
 	    }
 	    return sb.toString();
 	}
+	
+	public boolean fileExists(String FilePath){
+	    java.io.File file = new java.io.File(FilePath);
+	    return file.exists();
+	}
 
 	
 
@@ -211,24 +216,24 @@ public class AssignmentActivity extends Activity
 		            apri.setOnClickListener(new View.OnClickListener() {
 						public void onClick(View view) { 
 								Intent intent = new Intent();
-								File filetoopen = new File(PATHD+filename);
-					            intent.setAction(android.content.Intent.ACTION_VIEW);
-				                try {
-				                	//Get MIME TYPE
-				                	Uri uri = Uri.fromFile(filetoopen);
-				                	String fileExtension= MimeTypeMap.getFileExtensionFromUrl(uri.toString());
-				                	String mimeType= MimeTypeMap.getSingleton().getMimeTypeFromExtension(fileExtension);
-				                	//Start an intent to open the file with obtained MIMETYPE
-				                	intent.setDataAndType(Uri.fromFile(filetoopen), mimeType);
-				                	startActivity(intent);
-				                }
-				                catch (NullPointerException e) {
-				                	showDialog("È necessario scaricare prima il file!");
-				                }
-				                catch (Exception exc) {
-				        			showDialog("Nessun applicazione installata può aprire questo file.");		        	 
-				                }
-	
+								if (!fileExists(PATHD+filename))
+									showDialog("È necessario scaricare prima il file!");
+								else {
+									File filetoopen = new File(PATHD+filename);
+						            intent.setAction(android.content.Intent.ACTION_VIEW);
+					                try {
+					                	//Get MIME TYPE
+					                	Uri uri = Uri.fromFile(filetoopen);
+					                	String fileExtension= MimeTypeMap.getFileExtensionFromUrl(uri.toString());
+					                	String mimeType= MimeTypeMap.getSingleton().getMimeTypeFromExtension(fileExtension);
+					                	//Start an intent to open the file with obtained MIMETYPE
+					                	intent.setDataAndType(Uri.fromFile(filetoopen), mimeType);
+					                	startActivity(intent);
+					                }
+					                catch (Exception exc) {
+					        			showDialog("Nessun applicazione installata può aprire questo file.");		        	 
+					                }
+								}
 			        	  }
 		            });
 
