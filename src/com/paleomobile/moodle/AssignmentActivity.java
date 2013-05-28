@@ -188,13 +188,7 @@ public class AssignmentActivity extends Activity
 	 
 	        	final Button pulsante = (Button) findViewById(R.assignment.button1);
 	        	//Check if the file has already been downloaded
-	        	File file = new File (PATHD+filename);
-				if(file.exists()) {
-		        	pulsante.setText("File scaricato");
-	            	pulsante.setEnabled(false);
-  	                outputFile = file;
-	        	}
-	        	else {
+				if(!fileExists(PATHD+filename)) {
 		        	pulsante.setText("Scarica file");
 		            pulsante.setOnClickListener(new View.OnClickListener() {
 		        	public void onClick(View view) {        			  
@@ -206,15 +200,9 @@ public class AssignmentActivity extends Activity
 		  	            mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 			  	        DownloadFile downloadFile = new DownloadFile();
 			  	        downloadFile.execute(decisore);
-			  	        pulsante.setText("File scaricato");
-			            pulsante.setEnabled(false);
-		        	  }
-		        	});
-	        		}
-		        	Button apri = (Button) findViewById(R.assignment.button2);
-		        	apri.setVisibility(View.VISIBLE);
-		            apri.setOnClickListener(new View.OnClickListener() {
-						public void onClick(View view) { 
+			  	        pulsante.setText("Apri file");
+			  	        pulsante.setOnClickListener(new View.OnClickListener() {
+							public void onClick(View view) { 
 								Intent intent = new Intent();
 								if (!fileExists(PATHD+filename))
 									showDialog("È necessario scaricare prima il file!");
@@ -235,8 +223,14 @@ public class AssignmentActivity extends Activity
 					                }
 								}
 			        	  }
-		            });
-
+			        	});
+		        	  }
+		        	});
+	        	}
+				else {
+					pulsante.setText("Apri file");
+		            
+				}
 	        }
 	        else {
 	        	//Open as URL
