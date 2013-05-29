@@ -30,6 +30,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -187,51 +188,52 @@ public class AssignmentActivity extends Activity
 	        	filename=decisore.substring(decisore.lastIndexOf("/"));
 	 
 	        	final Button pulsante = (Button) findViewById(R.assignment.button1);
+	        	
+	        	final OnClickListener OpenFileListener = new View.OnClickListener() {
+		        	public void onClick(View view) {        	
+						Intent intent = new Intent();
+						File filetoopen = new File(PATHD+filename);
+			            intent.setAction(android.content.Intent.ACTION_VIEW);
+		                try {
+		                	//Get MIME TYPE
+		                	Uri uri = Uri.fromFile(filetoopen);
+		                	String fileExtension= MimeTypeMap.getFileExtensionFromUrl(uri.toString());
+		                	String mimeType= MimeTypeMap.getSingleton().getMimeTypeFromExtension(fileExtension);
+		                	//Start an intent to open the file with obtained MIMETYPE
+		                	intent.setDataAndType(Uri.fromFile(filetoopen), mimeType);
+		                	startActivity(intent);
+		                }
+		                catch (Exception exc) {
+		        			showDialog("Nessun applicazione installata può aprire questo file.");		        	 
+		                }
+				}
+	        	};
+	        	
 	        	//Check if the file has already been downloaded
 				if(!fileExists(PATHD+filename)) {
 		        	pulsante.setText("Scarica file");
-		            pulsante.setOnClickListener(new View.OnClickListener() {
-		        	public void onClick(View view) {        			  
-		  	            mProgressDialog = new ProgressDialog(AssignmentActivity.this);
-		  	            mProgressDialog.setMessage("Download in corso");
-		  	            mProgressDialog.setIndeterminate(false);
-		  	            mProgressDialog.setMax(100);
-		  	            mProgressDialog.setCancelable(false);
-		  	            mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-			  	        DownloadFile downloadFile = new DownloadFile();
-			  	        downloadFile.execute(decisore);
-			  	        pulsante.setText("Apri file");
-			  	        pulsante.setOnClickListener(new View.OnClickListener() {
-							public void onClick(View view) { 
-								Intent intent = new Intent();
-								if (!fileExists(PATHD+filename))
-									showDialog("È necessario scaricare prima il file!");
-								else {
-									File filetoopen = new File(PATHD+filename);
-						            intent.setAction(android.content.Intent.ACTION_VIEW);
-					                try {
-					                	//Get MIME TYPE
-					                	Uri uri = Uri.fromFile(filetoopen);
-					                	String fileExtension= MimeTypeMap.getFileExtensionFromUrl(uri.toString());
-					                	String mimeType= MimeTypeMap.getSingleton().getMimeTypeFromExtension(fileExtension);
-					                	//Start an intent to open the file with obtained MIMETYPE
-					                	intent.setDataAndType(Uri.fromFile(filetoopen), mimeType);
-					                	startActivity(intent);
-					                }
-					                catch (Exception exc) {
-					        			showDialog("Nessun applicazione installata può aprire questo file.");		        	 
-					                }
-								}
-			        	  }
-			        	});
-		        	  }
-		        	});
-	        	}
-				else {
-					pulsante.setText("Apri file");
-		            
+		            pulsante.setOnClickListener(new View.OnClickListener() 
+		            {
+			        	public void onClick(View view) {        			  
+			  	            mProgressDialog = new ProgressDialog(AssignmentActivity.this);
+			  	            mProgressDialog.setMessage("Download in corso");
+			  	            mProgressDialog.setIndeterminate(false);
+			  	            mProgressDialog.setMax(100);
+			  	            mProgressDialog.setCancelable(false);
+			  	            mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+				  	        DownloadFile downloadFile = new DownloadFile();
+				  	        downloadFile.execute(decisore);
+				  	        pulsante.setText("Apri file");
+							pulsante.setOnClickListener(OpenFileListener);
+			        	}
+		            });
 				}
-	        }
+				else 
+				{
+					pulsante.setText("Apri file");
+					pulsante.setOnClickListener(OpenFileListener);
+				}
+			}
 	        else {
 	        	//Open as URL
 	        	Button startBrowser = (Button) findViewById(R.assignment.button1);
