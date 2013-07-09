@@ -11,24 +11,18 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Calendar;
-import java.util.Date;
 
 import com.paleomobile.moodle.R;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -43,7 +37,6 @@ public class AssignmentActivity extends Activity
 	private TextView   due;
 	private TextView   turned_in;
 	private Globals app;
-	private File outputFile;
 	private String filename;
 	private String PATHD;
 	ProgressDialog mProgressDialog;
@@ -65,8 +58,7 @@ public class AssignmentActivity extends Activity
 	            BufferedReader cookiereader = new BufferedReader(new InputStreamReader(cookiestream));
 	            StringBuffer cookieContent = new StringBuffer("");
 	            byte[] buffer = new byte[1024];
-				int length;
-	            while ((length = cookiestream.read(buffer)) != -1) {
+	            while ((cookiestream.read(buffer)) != -1) {
 	            	cookieContent.append(new String(buffer));
 	            }
 	            String cookie_final = cookieContent.toString();
@@ -95,7 +87,6 @@ public class AssignmentActivity extends Activity
 	        	showDialog("Errore durante il download del file!");
 	        	Log.e("log_tag",e.toString());
 	        }
-            outputFile = new File (PATHD+filename);
 	    	mProgressDialog.dismiss();
 	        return null;
 	    }
@@ -273,53 +264,4 @@ public class AssignmentActivity extends Activity
 		}	
 	}
 	
-	private boolean setReminder()
-	{
-		Calendar now = Calendar.getInstance();
-		Calendar due = Calendar.getInstance();
-
-		Date dueDate = new Date(app.assignment.getDue());
-		due.setTime(dueDate);
-
-		Intent intent = new Intent(Intent.ACTION_EDIT);
-		intent.setType("vnd.android.cursor.item/event");
-		
-		if (due.compareTo(now)!=-1)
-		{
-			intent.putExtra("endTime", due.getTimeInMillis());
-			due.set(Calendar.DAY_OF_YEAR, due.get(Calendar.DAY_OF_YEAR)-1);
-			due.set(Calendar.HOUR, 12);
-			due.set(Calendar.MINUTE, 0);
-			intent.putExtra("beginTime", due.getTimeInMillis());
-		}
-		
-		intent.putExtra("allDay", false);
-		intent.putExtra("title", app.assignment.getTitle());
-		startActivity(intent);
-		return true;
-	}
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
-	{
-		if (!app.assignment.getDone() && !app.assignment.getNoDate())
-		{
-			MenuInflater inflater = getMenuInflater();
-			inflater.inflate(R.menu.assignment_menu, menu);
-		}
-        return super.onCreateOptionsMenu(menu);
-    }
-	
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		switch (item.getItemId())
-		{
-			case (R.menu.ReminderMenuItem):
-			{
-				setReminder();
-				return true;
-			}
-		}
-		return super.onOptionsItemSelected(item);
-	}
 }

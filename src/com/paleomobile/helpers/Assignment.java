@@ -1,7 +1,6 @@
 package com.paleomobile.helpers;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -76,13 +75,7 @@ public class Assignment
 		else						 return true;
 	}
 	
-	public boolean getNoDate()
-	{
-		try{
-			new Date(due);
-			return false;
-		} catch (Exception e){ return true; }
-	}
+
 	
 	//Accessors/Setters
 	public boolean wasFetched()
