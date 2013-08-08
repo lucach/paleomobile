@@ -11,6 +11,8 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.util.Log;
+
 public class HttpHelper
 {
 	private DefaultHttpClient httpClient;
@@ -32,8 +34,9 @@ public class HttpHelper
 		HttpPost httpPost = new HttpPost(serverURL+get);
 		httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 		
-		if (httpHeader != null)	
-			httpPost.setHeader(httpHeader);
+		if (httpHeader != null)	{
+			httpPost.addHeader("MyCookie", httpHeader.toString().substring(8));
+		}
 		
 		HttpResponse response = httpClient.execute(httpPost);
 		

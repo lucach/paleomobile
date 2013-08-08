@@ -8,6 +8,8 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject; 
 
+import android.util.Log;
+
 public class Assignment
 {
 	private String title;
@@ -17,7 +19,6 @@ public class Assignment
 	private String available_from;
 	private String due;
 	private String turned_in;
-	private String status;
 	private boolean fetched;
 	
 	public Assignment(JSONObject assignment)
@@ -62,20 +63,13 @@ public class Assignment
             available_from = json.getString("available_from");
             due 		   = json.getString("due");
             turned_in	   = json.getString("turned_in");
-            status 		   = json.getString("status");
 		} catch(JSONException e){
+			Log.d("EX","An exception getting strings");
 			fetched = false;
 			return;
 		}
 	}
 	
-	public boolean getDone()
-	{
-		if (status.contains("Not"))	 return false;
-		else						 return true;
-	}
-	
-
 	
 	//Accessors/Setters
 	public boolean wasFetched()
@@ -102,6 +96,4 @@ public class Assignment
 	public String getTurnedIn()
 	{ return turned_in; }
 	
-	public String getStatus()
-	{ return status; }
 }

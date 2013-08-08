@@ -164,16 +164,16 @@ public class LoginActivity extends Activity
 								fos.close();
 							} catch (FileNotFoundException e1) {
 								// TODO Auto-generated catch block
-								showDialog("Impossibile completare il login.");
+								e1.printStackTrace();
 							} catch (IOException e) {
 								// TODO Auto-generated catch block
-								showDialog("Impossibile completare il login.");
+								e.printStackTrace();
 							}
 						} catch (Exception e){
 							if (saveCredentials)
 								loginResult = "Username o password errati.";
 							else
-								loginResult = "Errore del server, riprovare più tardi.";
+								loginResult = "Errore del server, riprovare piÃ¹ tardi.";
 						}
 					}
 					progressHandler.sendEmptyMessage(0);	
