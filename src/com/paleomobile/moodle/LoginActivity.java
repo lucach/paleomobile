@@ -163,11 +163,9 @@ public class LoginActivity extends Activity
 								fos.write(response.getFirstHeader("Cookie").toString().getBytes());
 								fos.close();
 							} catch (FileNotFoundException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
+								showDialog("Impossibile completare il login.");
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								showDialog("Impossibile completare il login.");
 							}
 						} catch (Exception e){
 							if (saveCredentials)

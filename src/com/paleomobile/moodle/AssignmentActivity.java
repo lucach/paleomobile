@@ -22,7 +22,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -85,7 +84,6 @@ public class AssignmentActivity extends Activity
 	            input.close();
 	        } catch (Exception e) {
 	        	showDialog("Errore durante il download del file!");
-	        	Log.e("log_tag",e.toString());
 	        }
 	    	mProgressDialog.dismiss();
 	        return null;
