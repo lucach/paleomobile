@@ -76,4 +76,5 @@ public class Course
 	
 	public Assignment[] getAssignments()
 	{ return assignments; }	
+	
 }

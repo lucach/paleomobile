@@ -103,9 +103,9 @@ public class AssignmentActivity extends Activity
 	
 	private String pulisciStringa(String stringa) {
 		try {
-			 //Delete first two and last two characters
+			//Delete first two and last two characters
 			stringa = stringa.substring(2,stringa.length()-2);
-			//Delete backslash
+			//Delete backslashes
 			stringa = stringa.replace("\\", "");
 			return stringa;
 		}
@@ -159,7 +159,10 @@ public class AssignmentActivity extends Activity
 		turned_in = (TextView) findViewById(R.assignment.turned_in); 
 		
 		//Create decisore which is the 'switch case' variable
-		final String decisore = pulisciStringa(app.assignment.getAvailableFrom());
+		String tmp = pulisciStringa(app.assignment.getAvailableFrom());
+		if (tmp == "")
+			tmp = app.assignment.getUrl();
+		final String decisore = tmp;
 		if (decisore.contains("http")) {	
 			//Adapt layout to hide unuseful textbox
 	        View button = findViewById(R.assignment.button1);
@@ -168,8 +171,10 @@ public class AssignmentActivity extends Activity
 	        findViewById(R.assignment.info_due).setVisibility(View.GONE);
 	        findViewById(R.assignment.info_turn).setVisibility(View.GONE);
 	        findViewById(R.assignment.info_grade).setVisibility(View.GONE);
-	        
-	        description.setText(app.assignment.getDescription());
+	        if (app.assignment.getDescription().compareTo("") != 0)	//If there's not a description
+	        	description.setText(app.assignment.getDescription());
+	        else
+	        	description.setText("Descrizione non disponibile.");
 	        if (decisore.contains("resource")) {
 	            PATHD= Environment.getExternalStorageDirectory().toString()+"/PaleoMobile/downloads";
 	            File PathDir = new File (PATHD);
@@ -193,7 +198,7 @@ public class AssignmentActivity extends Activity
 		                	startActivity(intent);
 		                }
 		                catch (Exception exc) {
-		        			showDialog("Nessun applicazione installata puÃ² aprire questo file.");		        	 
+		        			showDialog("Nessun applicazione installata può aprire questo file.");		        	 
 		                }
 				}
 	        	};
@@ -237,28 +242,15 @@ public class AssignmentActivity extends Activity
 	        } 
 		}
 		else {
-			//It may be one of those strange URLs, in fact they're only an autoredirect
-			//I don't see any way to get the URL.. otherwise need to find a way to get
-			//URL from previous activity
-			if (pulisciStringa(app.assignment.getAvailableFrom())=="") {
-				description.setText("URL non gestito dall'applicazione. Indagini in corso...");
-				findViewById(R.assignment.info_des).setVisibility(View.GONE);
-				findViewById(R.assignment.info_ava).setVisibility(View.GONE);
-		        findViewById(R.assignment.info_due).setVisibility(View.GONE);
-		        findViewById(R.assignment.info_turn).setVisibility(View.GONE);
-		        findViewById(R.assignment.info_grade).setVisibility(View.GONE);
-			}
-			else {
-				//It's an assigment, so dispaly additional informations
-				due.setText(pulisciStringa(app.assignment.getDue()));
-				available_from.setText(pulisciStringa(app.assignment.getAvailableFrom()));
-				turned_in.setText(pulisciStringa(app.assignment.getTurnedIn()));
-				if (pulisciStringa(app.assignment.getGrade()).length()==0)
-					grade.setText("Voto non presente");
-				else
-					grade.setText(pulisciStringa(app.assignment.getGrade()));
-				description.setText(app.assignment.getDescription());
-			}
+			//It's an assigment, so display additional informations
+			due.setText(pulisciStringa(app.assignment.getDue()));
+			available_from.setText(pulisciStringa(app.assignment.getAvailableFrom()));
+			turned_in.setText(pulisciStringa(app.assignment.getTurnedIn()));
+			if (pulisciStringa(app.assignment.getGrade()).length()==0)
+				grade.setText("Voto non presente");
+			else
+				grade.setText(pulisciStringa(app.assignment.getGrade()));
+			description.setText(app.assignment.getDescription());
 		}	
 	}
 	

@@ -19,6 +19,7 @@ public class Assignment
 	private String available_from;
 	private String due;
 	private String turned_in;
+	private String url;
 	private boolean fetched;
 	
 	public Assignment(JSONObject assignment)
@@ -63,6 +64,7 @@ public class Assignment
             available_from = json.getString("available_from");
             due 		   = json.getString("due");
             turned_in	   = json.getString("turned_in");
+            url			   = json.getString("url");
 		} catch(JSONException e){
 			Log.d("EX","An exception getting strings");
 			fetched = false;
@@ -95,5 +97,9 @@ public class Assignment
 	
 	public String getTurnedIn()
 	{ return turned_in; }
+	
+	public String getUrl()
+	{ return url; }
+
 	
 }
