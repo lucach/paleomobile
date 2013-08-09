@@ -63,14 +63,17 @@ public class AssignmentActivity extends Activity
 	            String cookie_final = cookieContent.toString();
 	            cookie_final = cookie_final.substring(8);
 	            cookiereader.close();
-	
 	            //Do connection
                 connection.setRequestProperty("Cookie", cookie_final);
                 connection.setDoOutput(true);
 	            connection.connect();
 	            int fileLength = connection.getContentLength();
 	            InputStream input =  connection.getInputStream();
-	            OutputStream output = new FileOutputStream(PATHD+filename);
+	            String tmp = PATHD+filename;
+	            int getparameterindex = tmp.indexOf("?");
+	            if (getparameterindex != -1) //There are GET parameters
+	                tmp = tmp.substring(0, getparameterindex);   
+	            OutputStream output = new FileOutputStream(tmp);
 	            byte data[] = new byte[1024];
 	            long total = 0;
 	            int count;
@@ -82,7 +85,7 @@ public class AssignmentActivity extends Activity
 	            output.flush();
 	            output.close();
 	            input.close();
-	        } catch (Exception e) {
+	        } catch (Exception e) { 
 	        	showDialog("Errore durante il download del file!");
 	        }
 	    	mProgressDialog.dismiss();
