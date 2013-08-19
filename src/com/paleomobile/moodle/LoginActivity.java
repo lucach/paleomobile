@@ -144,7 +144,7 @@ public class LoginActivity extends Activity
 							 );			
 					HttpResponse response = app.httphelper.getHttpResponse();			
 					if (response == null)
-						loginResult = "Server non disponibile, riprovare piÃ¹ tardi.";		
+						loginResult = "Server non disponibile, riprovare più tardi.";		
 					else
 					{
 						app.httphelper.setHeader(response.getFirstHeader("Cookie")); 	
