@@ -16,12 +16,17 @@ import com.paleomobile.moodle.R;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -38,6 +43,7 @@ public class AssignmentActivity extends Activity
 	private Globals app;
 	private String filename;
 	private String PATHD;
+    private final static String MY_PREFERENCES = "Preferences";
 	ProgressDialog mProgressDialog;
 	
 
@@ -46,23 +52,23 @@ public class AssignmentActivity extends Activity
 	
 	private class DownloadFile extends AsyncTask<String, Integer, String> {
 	    @Override
+	    
+	    
 	    protected String doInBackground(String... sUrl) {
 	        try {
 	            URL url = new URL(sUrl[0]);
 	            URLConnection connection = url.openConnection();
 	            //Read session-cookie
-	            String PATHCOOKIE = Environment.getExternalStorageDirectory().toString()+"/PaleoMobile/cookie";           
-	            File cookie = new File(PATHCOOKIE);
-	            FileInputStream cookiestream = new FileInputStream(cookie);
-	            BufferedReader cookiereader = new BufferedReader(new InputStreamReader(cookiestream));
-	            StringBuffer cookieContent = new StringBuffer("");
-	            byte[] buffer = new byte[1024];
-	            while ((cookiestream.read(buffer)) != -1) {
-	            	cookieContent.append(new String(buffer));
+	        	FileInputStream cookiestream = openFileInput("cookie");
+	            InputStreamReader inputStreamReader = new InputStreamReader(cookiestream);
+	            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+	            StringBuilder sb = new StringBuilder();
+	            String line;
+	            while ((line = bufferedReader.readLine()) != null) {
+	                sb.append(line);
 	            }
-	            String cookie_final = cookieContent.toString();
+	            String cookie_final = sb.toString();
 	            cookie_final = cookie_final.substring(8);
-	            cookiereader.close();
 	            //Do connection
                 connection.setRequestProperty("Cookie", cookie_final);
                 connection.setDoOutput(true);
@@ -102,6 +108,15 @@ public class AssignmentActivity extends Activity
 	    }
 	    	    
 }
+	public static String convertStreamToString(InputStream is) throws Exception {
+	    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+	    StringBuilder sb = new StringBuilder();
+	    String line = null;
+	    while ((line = reader.readLine()) != null) {
+	      sb.append(line).append("\n");
+	    }
+	    return sb.toString();
+	}
 
 	
 	private String pulisciStringa(String stringa) {
@@ -112,32 +127,16 @@ public class AssignmentActivity extends Activity
 			stringa = stringa.replace("\\", "");
 			return stringa;
 		}
-		catch (Exception exc) {
-			//If the length is shorter than 4, return a null string.
+		catch (Exception exc) { //If the length is shorter than 4, return a null string.
 			return "";
 		}
 	}
-	
-	   
-	public static String convertStreamToString(InputStream is) throws Exception {
-	    BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-	    StringBuilder sb = new StringBuilder();
-	    String line = null;
-	    while ((line = reader.readLine()) != null) {
-	      sb.append(line).append("\n");
-	    }
-	    return sb.toString();
-	}
-	
+		
 	public boolean fileExists(String FilePath){
 	    java.io.File file = new java.io.File(FilePath);
 	    return file.exists();
 	}
-
 	
-
-	
-	@SuppressLint("NewApi")
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState); 
@@ -161,7 +160,7 @@ public class AssignmentActivity extends Activity
 		available_from = (TextView) findViewById(R.assignment.available_from);
 		turned_in = (TextView) findViewById(R.assignment.turned_in); 
 		
-		//Create decisore which is the 'switch case' variable
+		//Create "decisore" which is the 'switch case' variable
 		String tmp = pulisciStringa(app.assignment.getAvailableFrom());
 		if (tmp == "")
 			tmp = app.assignment.getUrl();
@@ -179,13 +178,35 @@ public class AssignmentActivity extends Activity
 	        else
 	        	description.setText("Descrizione non disponibile.");
 	        if (decisore.contains("resource")) {
-	            PATHD= Environment.getExternalStorageDirectory().toString()+"/PaleoMobile/downloads";
+	        	if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
+	        		PATHD= Environment.getExternalStorageDirectory().toString()+"/PaleoMobile/downloads";
+	        	else
+	        	{
+	        		SharedPreferences prefs = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
+	                final SharedPreferences.Editor editor = prefs.edit();
+	                if (prefs.getBoolean("norepeat", false) != true)
+	                {
+		        		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		                builder.setTitle("Attenzione");
+		                builder.setMessage("Non è stata trovata una scheda esterna. I file scaricati verranno memorizzati nella memoria interna.");
+		                builder.setCancelable(false);
+		                builder.setNegativeButton("Ok",new DialogInterface.OnClickListener() {
+		                    public void onClick(DialogInterface dialog, int id) {
+		                        editor.putBoolean("norepeat", true);
+		                        editor.commit();
+		                        dialog.cancel();
+		                    }
+		                });
+		                AlertDialog alert = builder.create();
+		                alert.show();
+	                }
+	        		PATHD = getBaseContext().getApplicationContext().getFilesDir().getAbsolutePath();
+	        	}
+	        	Log.d("tag",PATHD);
 	            File PathDir = new File (PATHD);
 	            PathDir.mkdir();
 	        	filename=decisore.substring(decisore.lastIndexOf("/"));
-	 
 	        	final Button pulsante = (Button) findViewById(R.assignment.button1);
-	        	
 	        	final OnClickListener OpenFileListener = new View.OnClickListener() {
 		        	public void onClick(View view) {        	
 						Intent intent = new Intent();

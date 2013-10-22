@@ -117,7 +117,7 @@ public class CoursesActivity extends ListActivity
 			startActivity(intent);
 		}
 		else
-			showDialog("Course fetch failed.");
+			showDialog("Impossibile recuperare gli elementi.");
 	}
 	
 	@Override

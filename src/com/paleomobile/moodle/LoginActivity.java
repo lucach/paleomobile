@@ -151,28 +151,25 @@ public class LoginActivity extends Activity
 						try
 						{
 							json=new JSONObject(EntityUtils.toString(response.getEntity()));
-			                try {
-			                	//If login was successful, cookie can be saved; otherwise display an alert
-			                	String PATH = Environment.getExternalStorageDirectory().toString()+"/PaleoMobile";
-								//Create a file which contains current-session cookie
-				                File file = new File(PATH);
-				                file.mkdirs();
-			                	File outputFile = new File(file, "cookie");
-			                	FileOutputStream fos;
-								fos = new FileOutputStream(outputFile);
-								fos.write(response.getFirstHeader("Cookie").toString().getBytes());
-								fos.close();
-							} catch (FileNotFoundException e1) {
-								showDialog("Impossibile completare il login.");
-							} catch (IOException e) {
-								showDialog("Impossibile completare il login.");
-							}
-						} catch (Exception e){
+		                	//If login was successful, cookie can be saved; otherwise display an alert
+							//Create a file which contains current-session cookie
+							FileOutputStream fos = openFileOutput("cookie", Context.MODE_PRIVATE);
+							fos.write(response.getFirstHeader("Cookie").toString().getBytes());
+							fos.close();
+						} 
+						catch (FileNotFoundException e) {
+							showDialog("Impossibile completare il login.");
+						} 
+						catch (IOException e) {
+							showDialog("Impossibile completare il login.");
+						}
+						catch (Exception e) {
 							if (saveCredentials)
 								loginResult = "Username o password errati.";
 							else
-								loginResult = "Errore del server, riprovare piÃ¹ tardi.";
+								loginResult = "Errore del server, riprovare più tardi.";
 						}
+						
 					}
 					progressHandler.sendEmptyMessage(0);	
 				}
