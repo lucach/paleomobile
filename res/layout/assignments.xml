@@ -29,7 +29,7 @@
         android:id="@+id/android:empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No assignments."
+        android:text="Nessun elemento presente"
         android:textSize="18sp"/>
 
 </LinearLayout>
