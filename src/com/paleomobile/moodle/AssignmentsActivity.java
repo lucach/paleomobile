@@ -25,7 +25,7 @@ public class AssignmentsActivity extends ListActivity
 		
 		app = ((Globals)getApplicationContext());
 		
-		((TextView) findViewById(R.assignments.bar)).setText(app.course.getTitle());
+		((TextView) findViewById(R.id.assignments_bar)).setText(app.course.getTitle());
 		
 		assignmentNameList    = new ArrayList<String>();
 		assignmentListAdapter = new ArrayAdapter<String>(this, R.layout.list_item, assignmentNameList);
