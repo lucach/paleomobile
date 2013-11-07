@@ -78,8 +78,9 @@ public class AssignmentActivity extends Activity
 	            String tmp = PATHD+filename;
 	            int getparameterindex = tmp.indexOf("?");
 	            if (getparameterindex != -1) //There are GET parameters
-	                tmp = tmp.substring(0, getparameterindex);   
-	            OutputStream output = new FileOutputStream(tmp);
+	                tmp = tmp.substring(0, getparameterindex);
+	            File FileDownloaded = new File (tmp);
+	            OutputStream output = new FileOutputStream(FileDownloaded);
 	            byte data[] = new byte[1024];
 	            long total = 0;
 	            int count;
@@ -91,8 +92,8 @@ public class AssignmentActivity extends Activity
 	            output.flush();
 	            output.close();
 	            input.close();
-	        } catch (Exception e) { 
-	        	showDialog("Errore durante il download del file!");
+	        } catch (Exception e) {
+	        	Log.e("tag", e.toString());
 	        }
 	    	mProgressDialog.dismiss();
 	        return null;
@@ -188,7 +189,7 @@ public class AssignmentActivity extends Activity
 	                {
 		        		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		                builder.setTitle("Attenzione");
-		                builder.setMessage("Non è stata trovata una scheda esterna. I file scaricati verranno memorizzati nella memoria interna.");
+		                builder.setMessage("Non Ã¨ stata trovata una scheda esterna. I file scaricati verranno memorizzati nella memoria interna.");
 		                builder.setCancelable(false);
 		                builder.setNegativeButton("Ok",new DialogInterface.OnClickListener() {
 		                    public void onClick(DialogInterface dialog, int id) {
@@ -204,7 +205,7 @@ public class AssignmentActivity extends Activity
 	        	}
 	        	Log.d("tag",PATHD);
 	            File PathDir = new File (PATHD);
-	            PathDir.mkdir();
+	            PathDir.mkdirs();
 	        	filename=decisore.substring(decisore.lastIndexOf("/"));
 	        	final Button pulsante = (Button) findViewById(R.assignment.button1);
 	        	final OnClickListener OpenFileListener = new View.OnClickListener() {
@@ -222,7 +223,7 @@ public class AssignmentActivity extends Activity
 		                	startActivity(intent);
 		                }
 		                catch (Exception exc) {
-		        			showDialog("Nessun applicazione installata può aprire questo file.");		        	 
+		        			showDialog("Nessun applicazione installata puÃ² aprire questo file.");		        	 
 		                }
 				}
 	        	};
