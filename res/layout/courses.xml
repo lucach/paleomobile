@@ -7,7 +7,7 @@
     android:paddingBottom="15dp">
    
     <TextView
-    	android:id="@+courses/bar"
+    	android:id="@+id/courses_bar"
     	android:background="#ff0099CC"
     	android:textStyle="bold"
     	android:textColor="#000"

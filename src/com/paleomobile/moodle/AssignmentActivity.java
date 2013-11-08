@@ -145,35 +145,41 @@ public class AssignmentActivity extends Activity
 				
 		app = ((Globals)getApplicationContext());		
 		
-		((TextView) findViewById(R.assignment.bar)).setText(app.assignment.getTitle());
+		((TextView) findViewById(R.id.assignment_bar)).setText(app.assignment.getTitle());
 		
 		if (!app.assignment.wasFetched())
+		{
 			app.assignment.populateAssignment(app.httphelper);
+			Log.d("tag","RE-DOWNLOAD");
+		}
+		else
+			Log.d("tag","gia salvato");
 		if (!app.assignment.wasFetched())
 		{
 			showDialog("Impossibile recuperare l'elemento.");
 			finish();
 		}
 		
-		due = (TextView) findViewById(R.assignment.due);
-		description = (TextView) findViewById(R.assignment.description);
-		grade = (TextView) findViewById(R.assignment.grade);
-		available_from = (TextView) findViewById(R.assignment.available_from);
-		turned_in = (TextView) findViewById(R.assignment.turned_in); 
+		due = (TextView) findViewById(R.id.assignment_due);
+		description = (TextView) findViewById(R.id.assignment_description);
+		grade = (TextView) findViewById(R.id.assignment_grade);
+		available_from = (TextView) findViewById(R.id.assignment_available_from);
+		turned_in = (TextView) findViewById(R.id.assignment_turned_in); 
 		
 		//Create "decisore" which is the 'switch case' variable
 		String tmp = pulisciStringa(app.assignment.getAvailableFrom());
 		if (tmp == "")
 			tmp = app.assignment.getUrl();
 		final String decisore = tmp;
+		Log.d("decisore",decisore);
 		if (decisore.contains("http")) {	
-			//Adapt layout to hide unuseful textbox
-	        View button = findViewById(R.assignment.button1);
+			//Adapt layout in a messy way to hide unuseful textboxes
+	        View button = findViewById(R.id.assignment_button1);
 	        button.setVisibility(View.VISIBLE);
-	        findViewById(R.assignment.info_ava).setVisibility(View.GONE);
-	        findViewById(R.assignment.info_due).setVisibility(View.GONE);
-	        findViewById(R.assignment.info_turn).setVisibility(View.GONE);
-	        findViewById(R.assignment.info_grade).setVisibility(View.GONE);
+	        findViewById(R.id.assignment_info_ava).setVisibility(View.GONE);
+	        findViewById(R.id.assignment_info_due).setVisibility(View.GONE);
+	        findViewById(R.id.assignment_info_turn).setVisibility(View.GONE);
+	        findViewById(R.id.assignment_info_grade).setVisibility(View.GONE);
 	        if (app.assignment.getDescription().compareTo("") != 0)	//If there's not a description
 	        	description.setText(app.assignment.getDescription());
 	        else
@@ -207,7 +213,7 @@ public class AssignmentActivity extends Activity
 	            File PathDir = new File (PATHD);
 	            PathDir.mkdirs();
 	        	filename=decisore.substring(decisore.lastIndexOf("/"));
-	        	final Button pulsante = (Button) findViewById(R.assignment.button1);
+	        	final Button pulsante = (Button) findViewById(R.id.assignment_button1);
 	        	final OnClickListener OpenFileListener = new View.OnClickListener() {
 		        	public void onClick(View view) {        	
 						Intent intent = new Intent();
@@ -225,7 +231,7 @@ public class AssignmentActivity extends Activity
 		                catch (Exception exc) {
 		        			showDialog("Nessun applicazione installata può aprire questo file.");		        	 
 		                }
-				}
+		        	}
 	        	};
 	        	
 	        	//Check if the file has already been downloaded
@@ -255,7 +261,7 @@ public class AssignmentActivity extends Activity
 			}
 	        else {
 	        	//Open as URL
-	        	Button startBrowser = (Button) findViewById(R.assignment.button1);
+	        	Button startBrowser = (Button) findViewById(R.id.assignment_button1);
 	        	startBrowser.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -267,7 +273,7 @@ public class AssignmentActivity extends Activity
 	        } 
 		}
 		else {
-			//It's an assigment, so display additional informations
+			//It's an assignment, so display additional informations
 			due.setText(pulisciStringa(app.assignment.getDue()));
 			available_from.setText(pulisciStringa(app.assignment.getAvailableFrom()));
 			turned_in.setText(pulisciStringa(app.assignment.getTurnedIn()));

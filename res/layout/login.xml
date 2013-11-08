@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/bg"
     android:focusable="true"
-	android:focusableInTouchMode="true"
-    android:gravity="center">
+    android:focusableInTouchMode="true"
+    android:gravity="center"
+    android:orientation="vertical" >
 
     <ImageView
         android:id="@+id/imageView1"
@@ -16,12 +16,14 @@
         android:src="@drawable/paleo" />
  
     <ImageView
-    	android:src="@drawable/banner"
-    	android:layout_height="wrap_content"
-    	android:contentDescription="Logo login"
-    	android:layout_width="202dp"/>
+        android:layout_width="202dp"
+        android:layout_height="wrap_content"
+        android:contentDescription="Logo login"
+        android:paddingTop="10dp"
+        android:src="@drawable/banner" />
+
     <EditText 
-    	android:id="@+login/username"
+    	android:id="@+id/login_username"
     	android:minLines="1" 
     	android:selectAllOnFocus="true" 
    	android:inputType="text" 
@@ -31,7 +33,7 @@
     	android:layout_marginTop="10dp" 
    	android:layout_width="203dp"/>
     <EditText 
-	android:id="@+login/password"
+	android:id="@+id/login_password"
 	android:minLines="1"
 	android:selectAllOnFocus="true"
 	android:inputType="textPassword"
@@ -42,7 +44,7 @@
 	android:layout_width="205dp"/>
     
     <Button 
-    	android:id="@+login/loginButton"
+    	android:id="@+id/login_loginButton"
     	android:background="@drawable/login"
     	android:layout_marginTop="20dp"
     	android:layout_width="201dp"

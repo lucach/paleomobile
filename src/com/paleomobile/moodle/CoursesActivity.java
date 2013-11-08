@@ -37,7 +37,7 @@ public class CoursesActivity extends ListActivity
 		
 		app = ((Globals)getApplicationContext());
 		
-		((TextView) findViewById(R.courses.bar)).setText(app.student.getName());
+		((TextView) findViewById(R.id.courses_bar)).setText(app.student.getName());
 		
 		mList = new ArrayList<String>(); 
 		

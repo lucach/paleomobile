@@ -5,7 +5,7 @@
   	android:layout_height="fill_parent">
   	 		
   	<TextView
-    	android:id="@+assignment/bar"
+    	android:id="@+id/assignment_bar"
     	android:background="#ff0099CC"
     	android:textStyle="bold"
     	android:textColor="#000"
@@ -17,7 +17,7 @@
     <ScrollView
     	android:layout_width="fill_parent"
   		android:layout_height="fill_parent"
-  		android:layout_below="@assignment/bar"
+  		android:layout_below="@+id/assignment_bar"
   		android:paddingLeft="10dp"
   		android:paddingRight="10dp"
   		android:layout_marginTop="10dp">
@@ -28,21 +28,21 @@
   			android:layout_height="wrap_content">
   			
     		<TextView
-    		    android:id="@+assignment/info_des"
+    		    android:id="@+id/assignment_info_des"
 				android:text="Descrizione:"
 				android:textStyle="bold"
 				android:textSize="18sp"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"/>
 	 		<TextView
-    			android:id="@+assignment/description"
+    			android:id="@+id/assignment_description"
 				android:textSize="18sp"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="5dp"/>
     		
     		<TextView
-    		    android:id="@+assignment/info_ava"
+    		    android:id="@+id/assignment_info_ava"
 				android:text="Termine consegne:"
 				android:textStyle="bold"
 				android:textSize="18sp"
@@ -50,28 +50,28 @@
 				android:layout_height="wrap_content"
 				android:layout_marginTop="20dp"/>
 	 		<TextView
-    			android:id="@+assignment/available_from"
+    			android:id="@+id/assignment_available_from"
 				android:textSize="18sp"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="5dp"/>
 
 	 		<Button
-	 		    android:id="@+assignment/button1"
+	 		    android:id="@+id/assignment_button1"
 	 		    android:layout_width="match_parent"
 	 		    android:layout_height="wrap_content"
 	 		    android:visibility="gone"
 	 		    android:text="Apri risorsa web" />
 	 	
 	 		<Button
-	 		    android:id="@+assignment/button2"
+	 		    android:id="@+id/assignment_button2"
 	 		    android:layout_width="match_parent"
 	 		    android:layout_height="wrap_content"
 	 		    android:visibility="gone"
 	 		    android:text="Apri file" />
     		
     		<TextView
-    		    android:id="@+assignment/info_due"
+    		    android:id="@+id/assignment_info_due"
 				android:text="Stato consegna:"
 				android:textStyle="bold"
 				android:textSize="18sp"
@@ -80,14 +80,14 @@
 				android:layout_marginTop="20dp"/>
 
 	 		<TextView
-    			android:id="@+assignment/due"
+    			android:id="@+id/assignment_due"
 				android:textSize="18sp"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="5dp"/>
     		
     		<TextView
-    		    android:id= "@+assignment/info_turn"
+    		    android:id= "@+id/assignment_info_turn"
 				android:text="Stato valutazione:"
 				android:textStyle="bold"
 				android:textSize="18sp"
@@ -95,14 +95,14 @@
 				android:layout_height="wrap_content"
 				android:layout_marginTop="20dp"/>
 	 		<TextView
-    			android:id="@+assignment/turned_in"
+    			android:id="@+id/assignment_turned_in"
 				android:textSize="18sp"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="5dp"/>
     		
 			<TextView
-			    android:id="@+assignment/info_grade"
+			    android:id="@+id/assignment_info_grade"
 				android:text="Voto:"
 				android:textStyle="bold"
 				android:textSize="18sp"
@@ -110,7 +110,7 @@
 				android:layout_height="wrap_content"
 				android:layout_marginTop="20dp"/>
 	 		<TextView
-    			android:id="@+assignment/grade"
+    			android:id="@+id/assignment_grade"
 				android:textSize="18sp"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"

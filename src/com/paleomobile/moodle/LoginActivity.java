@@ -66,10 +66,10 @@ public class LoginActivity extends Activity
 	{
 		setContentView(R.layout.login);	
 		
-		Button login = (Button) findViewById(R.login.loginButton);
+		Button login = (Button) findViewById(R.id.login_loginButton);
 		
-		final EditText username = (EditText) findViewById(R.login.username);
-		final EditText password = (EditText) findViewById(R.login.password);
+		final EditText username = (EditText) findViewById(R.id.login_username);
+		final EditText password = (EditText) findViewById(R.id.login_password);
 		//URL is auto-setted
 		final String url = "http://moodle.itispaleocapa.it/";
 		
@@ -144,7 +144,7 @@ public class LoginActivity extends Activity
 							 );			
 					HttpResponse response = app.httphelper.getHttpResponse();			
 					if (response == null)
-						loginResult = "Server non disponibile, riprovare più tardi.";		
+						loginResult = "Server non disponibile, riprovare piï¿½ tardi.";		
 					else
 					{
 						app.httphelper.setHeader(response.getFirstHeader("Cookie")); 	
@@ -167,7 +167,7 @@ public class LoginActivity extends Activity
 							if (saveCredentials)
 								loginResult = "Username o password errati.";
 							else
-								loginResult = "Errore del server, riprovare più tardi.";
+								loginResult = "Errore del server, riprovare piÃ¹ tardi.";
 						}
 						
 					}
